@@ -2,7 +2,6 @@ import React, {useEffect,useRef, useState} from 'react'
 import { Segment, Grid, Button, Rail,Sticky, Header } from 'semantic-ui-react'
 import * as d3 from 'd3';
 import ThresholdPicker from '../thresholdpicker'
-import './MatrixViz.css'
 import FurtherInfo from './furtherInfo'
 
 
