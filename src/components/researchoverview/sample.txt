@@ -1,0 +1,194 @@
+import React, { useState,useEffect, useMemo } from 'react';
+import * as d3 from 'd3';
+import * as dc from 'dc';
+import { Segment, Grid, Header, Button, Icon, Loader, Label, Table } from 'semantic-ui-react';
+import stringHash  from 'string-hash';
+import './style.css'
+import { PieChart, BarChart, SunburstChart, RowChart, DataTable, DataCount } from 'react-dc-js';
+import crossfilter from 'crossfilter2';
+import { Constants } from 'tsparticles';
+import DataTableNew from './datatable';
+import { dataGrid } from 'dc';
+
+
+const ResearchOverview_cmp = ({data}) =>{ 
+
+    const [ loading, setLoading ] = useState(true);
+    const [ M_Data, SetM_data] = useState([]);
+
+    console.log(data)
+
+    useEffect (() => {
+        const data_Modified_tmp = [] 
+        data.forEach(d => {
+            d.Year = parseInt(d.Year)
+            const subject_array = String(d.Subject).split("#")//.map(d=> d.trim())
+            const co_authors_array = String(d.Authors).split("#").map(d=> d.trim()) //co_author_manipulator(String(d.Authors))
+            //const co_authors_array_filtered = co_authors_array.filter(d => d.indexOf('Bilal Khan') == -1)
+            console.log(d.Subject)
+            //d.Subject = subject_array
+            d.co_authors = co_authors_array
+        
+            // subject_array.forEach(s => {
+                
+            //         co_authors_array.forEach(c => {
+            //             d.M_Subject = s
+            //             d.M_co_authors = c
+            //             data_Modified_tmp.push(d)
+            //         })
+                
+                
+            // })
+        })
+        SetM_data(data_Modified_tmp)
+        setLoading(false)
+        
+    },[])
+
+        const cx = crossfilter(data)
+        const dimensionYear = cx.dimension(d => d.Year)
+        const groupYear = dimensionYear.group().reduceCount(function(d) {return d.ID;});
+
+        const dimensionID = cx.dimension(d => d.ID)
+        const groupID = dimensionID.group()
+        //setTableData(dimensionID.top(Infinity))
+
+        const dimensionSubject = cx.dimension(d => d.Subject)
+        const groupSubject = dimensionSubject.group()
+        .reduce(
+            function(p,v,nf){
+                //console.log(v)
+                return p
+            },
+            function(p,v,nf){
+                return p
+            },
+            function(){
+                return []
+            }
+
+        )
+
+        const dimensionCoAuthor = cx.dimension(d => d.M_co_authors)
+        const groupCoAuthor = dimensionCoAuthor.group()
+
+    const resetClicked = () => {
+        dc.filterAll()
+        dc.renderAll()
+    }
+
+    useEffect(()=>{
+        
+    },[])
+
+    //setInterval(function(){ setTableData(dimensionID.top(Infinity)) }, 1000);
+        
+
+   // console.log(groupYear.all())
+
+    return (
+        <> 
+        {loading ? <Loader /> : 
+        <Segment>
+            <Label as='a' color='red' ribbon='right' onClick={resetClicked}>
+                Reset
+                {/* <Button icon onClick={resetClicked} floated='right'>
+                    <Icon name='redo' />
+                </Button> */}
+            </Label>
+            <Grid>
+                <Grid.Row stretched>
+                    <Grid.Column width={8}>
+                        <Segment>
+                            <Header as='h4' >Co Authors</Header>
+                            <RowChart 
+                                 dimension={dimensionCoAuthor}
+                                 group={groupCoAuthor}
+                                 height={650}
+                                 elasticX={true}
+                                 elasticX={true}
+                                // labelOffsetX={-40}
+                                 fixedBarHeight={12}
+                            />
+                        </Segment>
+                    </Grid.Column>
+                    <Grid.Column width={8}>
+                        <Segment>
+                        <Header as='h4' >Subject areas</Header>
+                            <PieChart 
+                                dimension={dimensionSubject}
+                                group={groupSubject}
+                                height={350}
+                                innerRadius = {50}
+                                legend={dc.legend().x(0).y(0).itemHeight(10)}
+                            />
+                        </Segment>
+                        <Segment>
+                            <Header as='h4' icon textAlign='center'>Research Contributions (Yearly)</Header>
+                            <BarChart 
+                                dimension={dimensionYear} 
+                                group={groupYear}
+                                //x={d3.scaleTime().domain([new Date("1998-01-01"), Date.now()]).nice()}
+                                x={d3.scaleOrdinal().domain(d3.range(1998,2021,1))}
+                                xUnits={dc.units.ordinal}
+                                title={"Yearly"}
+                                height={175}
+
+                            />
+                        </Segment>
+                    </Grid.Column>
+                </Grid.Row>
+                <Grid.Row stretched>
+                    <Grid.Column width={16}>
+                        <table class="ui definition table">
+                            <thead>
+                                <tr>
+                                    <th><h3 class="ui center aligned header">Publications</h3></th>
+                                </tr>
+                            </thead>
+                            <DataTable
+                                dimension={dimensionID}
+                                columns={
+                                    [
+                                        // function (d) { return (
+                                        //     d.Year
+                                        // )},
+                                        function (d) { return (
+                                            d.Authors.replaceAll('# ',',')+'. '
+                                            +d.Title+', '+d.Publication+', '
+                                            + (d.Publisher == 'NULL'? '':d.Publisher)+ ', '+d.Year
+                                        )}
+                                    ]
+                                }
+                                sortBy ={function (d) { return d.Year }}
+                                order = {(d3.descending)}
+                                size={150}
+                            />
+
+                        </table>
+                        
+                    </Grid.Column>
+                </Grid.Row> 
+            </Grid>
+
+            
+             
+            
+            {/* <SunburstChart 
+                dimension={dimensionAuthor} 
+                group={groupAuthor} 
+                legend={dc.legend()}
+                radius={200}
+                innerRadius={30}
+                renderLabel={false}
+                
+            /> */}
+           
+        </Segment>
+        
+        }
+        </>
+    )
+}
+
+export default ResearchOverview_cmp

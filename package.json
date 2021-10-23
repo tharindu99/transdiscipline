@@ -1,0 +1,47 @@
+{
+  "name": "transdiscipline",
+  "version": "1.0.0",
+  "private": true,
+  "description": "transdiscipline",
+  "author": "Tharindu Peiris",
+  "keywords": [
+    "Bilal Khan"
+  ],
+  "scripts": {
+    "develop": "gatsby develop",
+    "start": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean",
+    "deploy": "gatsby build --prefix-paths && gh-pages -d public"
+  },
+  "dependencies": {
+    "@mdx-js/mdx": "^1.6.22",
+    "@mdx-js/react": "^1.6.22",
+    "d3": "^6.7.0",
+    "dc": "^4.2.7",
+    "density-clustering": "^1.3.0",
+    "echarts": "^5.1.1",
+    "echarts-for-react": "^3.0.1",
+    "gatsby": "^3.5.0",
+    "gatsby-plugin-image": "1.5.0",
+    "gatsby-plugin-manifest": "3.5.0",
+    "gatsby-plugin-react-helmet": "4.5.0",
+    "gatsby-plugin-sitemap": "4.1.0",
+    "gatsby-source-filesystem": "3.5.0",
+    "gatsby-source-mysql": "^2.2.3",
+    "gatsby-transformer-csv": "^3.5.0",
+    "gh-pages": "^3.1.0",
+    "rc-slider": "^9.7.2",
+    "react": "17.0.1",
+    "react-dc-js": "^0.2.0-beta",
+    "react-dom": "17.0.1",
+    "react-helmet": "6.1.0",
+    "react-particles-js": "^3.4.1",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^2.0.3",
+    "sharp": "^0.29.1",
+    "string-hash": "^1.1.3",
+    "tsparticles": "^1.33.2"
+  }
+}
