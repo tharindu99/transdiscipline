@@ -37,6 +37,24 @@ const imagePathFinder = (name) => {
     const msc_students = data.filter(d=> d.Degree === 'M.Sc.')
     const bsc_students = data.filter(d=> d.Degree === 'B.Sc.')
 
+    const extra = (s) => {
+        return (
+            <>
+                <Header as='h5' floated='right'>
+                <a href={'https://'+s.LinkedIn} target="_blank">
+                    <Icon name='linkedin' />
+                </a>
+                </Header>
+                <Header as='h5' floated='left'>
+                {s.Year}
+                </Header>
+            </>
+        )
+    }
+        
+      
+      
+
     const students = (arr) => {
         console.log(arr)
         return (
@@ -50,8 +68,9 @@ const imagePathFinder = (name) => {
                         'Research: ',
                         s.Title,' ',
                         s.Institution,
+                        s.Current,
                     ].join('')}
-                    extra={s.Year}
+                    extra={extra(s)}
                 />
             ))
     )}

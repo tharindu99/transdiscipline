@@ -1,6 +1,7 @@
 import { Link } from 'gatsby';
 import React, { useState } from 'react';
 import { Item, Label,Header,Icon} from "semantic-ui-react"
+import { rgbaToHsva } from 'tsparticles';
 
 
 
@@ -18,11 +19,11 @@ const Publication_list = ({data}) =>{
                             <Item.Header>{pub.Title}</Item.Header>
                             <Item.Meta>
                                 <span className='subject'>
-                                    <Header as='h5'>{pub.Subject}</Header>
+                                    <Header as='h5'>{pub.Subject.replaceAll('#',', ')}</Header>
                                 </span>
                             </Item.Meta>
                             <Item.Meta>
-                                {pub.Authors.replace('#',', ')}. <u>{pub.Title+' ,'}</u>  
+                                {pub.Authors.replaceAll('#',', ')}. <u>{pub.Title+' ,'}</u>  
                                 {(pub.Publication) === 'NULL'? '': pub.Publication+', '} 
                                 {(pub.Pages) === 'NULL'? '': pub.Pages+', '}
                                 {(pub.Address) === 'NULL'? '': pub.Address+', '} 
@@ -32,10 +33,10 @@ const Publication_list = ({data}) =>{
                             
                             
                             <Item.Description>
-                                <Label><Icon name='quote left' />Citations {pub.Citation}</Label>
+                                {/* <Label><Icon name='quote left' />Citations {pub.Citation}</Label> */}
                                 {pub.GoogleScholarURL != 'NULL' &&
                                     <Label>
-                                        <a href={pub.GoogleScholarURL} target="_blank">
+                                        <a href={pub.GoogleScholarURL} target="_blank" >
                                             <Icon name='google' />Google scholar
                                         </a>
                                     </Label>
