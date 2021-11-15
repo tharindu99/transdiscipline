@@ -44,7 +44,7 @@ const imagePathFinder = (name) => {
                 <Card 
                     key= {s.id}
                     image= {s.imagePath}
-                    header={s.Name+ ' ('+s.Degree+')'}
+                    header={s.Name}
                     meta={(s.Current === 'NULL')?'':s.Current}
                     description={[
                         'Research: ',

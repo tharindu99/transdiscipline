@@ -56,7 +56,7 @@ const Impact = ({data}) => {
         option_custom.push({
             title: {
                 show: true,
-                'text': "Prof.Bilal Khan's research Co-Author Network from 1998 to " + timeline[n] + ''
+                'text': "By " + timeline[n] + ''
             },
             series: [
                 {

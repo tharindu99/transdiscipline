@@ -17,26 +17,34 @@ const Publication_list = ({data}) =>{
                         <Item.Content>
                             <Item.Header>{pub.Title}</Item.Header>
                             <Item.Meta>
-                                <span className='author'>{pub.Authors}</span>
+                                <span className='subject'>
+                                    <Header as='h5'>{pub.Subject}</Header>
+                                </span>
                             </Item.Meta>
                             <Item.Meta>
-                            <span className='subject'>
-                                <Header as='h5'>{pub.Subject}</Header></span>
+                                {pub.Authors.replace('#',', ')}. <u>{pub.Title+' ,'}</u>  
+                                {(pub.Publication) === 'NULL'? '': pub.Publication+', '} 
+                                {(pub.Pages) === 'NULL'? '': pub.Pages+', '}
+                                {(pub.Address) === 'NULL'? '': pub.Address+', '} 
+                                {(pub.Publisher) === 'NULL'? '': 'Published by '+ pub.Publisher+', '}
+                                {pub.Year};
                             </Item.Meta>
+                            
                             
                             <Item.Description>
                                 <Label><Icon name='quote left' />Citations {pub.Citation}</Label>
+                                {pub.GoogleScholarURL != 'NULL' &&
+                                    <Label>
+                                        <a href={pub.GoogleScholarURL} target="_blank">
+                                            <Icon name='google' />Google scholar
+                                        </a>
+                                    </Label>
+                                }
                                 <Label>
-                                    <a href={pub.GoogleScholarURL} target="_blank">
-                                        <Icon name='google' />Google scholar
+                                    <a href={pub.File} target="_blank">
+                                        <Icon name='file pdf' />Download 
                                     </a>
                                 </Label>
-                                <Label>
-                                    <Link to='#'> 
-                                        <Icon name='file pdf' />Download 
-                                    </Link>
-                                </Label>
-                                <p>{pub.Publication}, {pub.Publisher}</p>
                             </Item.Description>
                             <br />
                         </Item.Content>

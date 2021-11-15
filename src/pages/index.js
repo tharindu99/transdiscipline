@@ -6,7 +6,7 @@ import About_cmp from '../components/about/about';
 import Background_cmp from '../components/background'
 import Publication_cmp from '../components/publication/publication';
 import ResearchOverview_cmp from '../components/researchoverview/reseachoverview';
-import Impact from '../components/impact/impact';
+import Collaborations from '../components/collaborations/collaborations';
 import Funding_cmp from '../components/funding/funding';
 import MatrixViz from '../components/matrixViz/matrixViz';
 import Mentorship from '../components/mentorship/mentorship'
@@ -42,19 +42,19 @@ const IndexPage = ({data}) => {
         return <Publication_cmp data={data.allPublicationCsv.nodes}></Publication_cmp>
       case 'Research Explorer':
         return <ResearchOverview_cmp data={data.allPublicationCsv.nodes}></ResearchOverview_cmp>
-      case 'Impact':
-          return <Impact data={data.allPublicationCsv.nodes}></Impact>
+      case 'Collaborations':
+          return <Collaborations data={data.allPublicationCsv.nodes}></Collaborations>
       case 'Funding':
           return <Funding_cmp data={data.allGrantsCsv.nodes}></Funding_cmp>
       case 'Mentorship':
           return <Mentorship data={data.allStudentCsv.nodes}></Mentorship>
-      // case 'MatrixViz':
-      //     return (
-      //       <MatrixViz data={data.allPdFgraphCsv.nodes} 
-      //                  nodeclusters={data.allDocClustersCsv.nodes} 
-      //                  pdf_files={data.allFile.nodes}
-      //                  publications={data.allPublicationCsv.nodes}>
-      //       </MatrixViz>)
+      case 'MatrixViz':
+          return (
+            <MatrixViz data={data.allPdFgraphCsv.nodes} 
+                       nodeclusters={data.allDocClustersCsv.nodes} 
+                       pdf_files={data.allFile.nodes}
+                       publications={data.allPublicationCsv.nodes}>
+            </MatrixViz>)
       default:
         return <Segment>Under constructions</Segment>
     }
@@ -63,7 +63,7 @@ const IndexPage = ({data}) => {
 
   return (
     <>
-    <Header as='h1' content='Prof. Bilal Khan' style={style.h1} textAlign='center'/>
+    <Header as='h1' content='Bilal Khan' style={style.h1} textAlign='center'/>
       <Container style={{ padding: '0em 0em 10px' }} >
         <Menu pointing>
             <Menu.Item
@@ -82,8 +82,8 @@ const IndexPage = ({data}) => {
               onClick={handleMenuClick}
             />
             <Menu.Item
-              name='Impact'
-              active={activeItem === 'Impact'}
+              name='Collaborations'
+              active={activeItem === 'Collaborations'}
               onClick={handleMenuClick}
             />
             <Menu.Item
@@ -101,11 +101,11 @@ const IndexPage = ({data}) => {
               active={activeItem === 'Profile'}
               onClick={handleMenuClick}
             />
-            {/* <Menu.Item
+            <Menu.Item
               name='MatrixViz'
               active={activeItem === 'MatrixViz'}
               onClick={handleMenuClick}
-            /> */}
+            />
           </Menu>
           
       </Container>
