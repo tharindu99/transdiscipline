@@ -23,7 +23,7 @@ const Publication_list = ({data}) =>{
                                 </span>
                             </Item.Meta> */}
                             <Item.Meta>
-                                {pub.Authors.replaceAll('#',', ')}. <u>{pub.Title+' ,'}</u>  
+                                {pub.Authors.replaceAll('#',', ')}. <u>{pub.Title+', '}</u>  
                                 {(pub.Publication) === 'NULL'? '': pub.Publication+', '} 
                                 {(pub.Pages) === 'NULL'? '': pub.Pages+', '}
                                 {(pub.Address) === 'NULL'? '': pub.Address+', '} 

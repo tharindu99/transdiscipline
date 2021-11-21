@@ -65,10 +65,9 @@ const imagePathFinder = (name) => {
                     header={s.Name}
                     meta={(s.Current === 'NULL')?'':s.Current}
                     description={[
-                        'Research: ',
+                        '(',s.MyRole,') ',
                         s.Title,' ',
-                        s.Institution,
-                        s.Current,
+                        s.Institution
                     ].join('')}
                     extra={extra(s)}
                 />

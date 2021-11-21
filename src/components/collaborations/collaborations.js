@@ -122,6 +122,7 @@ const Impact = ({data}) => {
                                 axisType: 'category',
                                 orient: 'vertical',
                                 autoPlay: true,
+                                loop: false,
                                 inverse: true,
                                 playInterval: 1000,
                                 left: null,
