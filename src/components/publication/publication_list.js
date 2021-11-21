@@ -17,11 +17,11 @@ const Publication_list = ({data}) =>{
                     <Item key={pub.Counter}>
                         <Item.Content>
                             <Item.Header>{pub.Title}</Item.Header>
-                            <Item.Meta>
+                            {/* <Item.Meta>
                                 <span className='subject'>
-                                    <Header as='h5'>{pub.Subject.replaceAll('#',', ')}</Header>
+                                    <Header as='h5'>{toString(pub.Subject).replaceAll('#',', ')}</Header>
                                 </span>
-                            </Item.Meta>
+                            </Item.Meta> */}
                             <Item.Meta>
                                 {pub.Authors.replaceAll('#',', ')}. <u>{pub.Title+' ,'}</u>  
                                 {(pub.Publication) === 'NULL'? '': pub.Publication+', '} 

@@ -3,8 +3,10 @@ import ReactECharts from 'echarts-for-react';
 import * as d3 from 'd3';
 
 const SubjectGraph = ({data,Subject_callBack}) => {
+  
     const SubjectGraph_clac = (M_data) => {
         let all_combinations = []
+
         M_data.forEach(e => {
             const subjects = e.Subject[0].split(',')
             subjects.forEach(d => {
@@ -12,18 +14,29 @@ const SubjectGraph = ({data,Subject_callBack}) => {
                 all_combinations.push(e)
             });
         });
-        const groupBySubject = new Map([...d3.group(all_combinations, d=> d.M_subject).entries()].sort())
         const result = []
-        groupBySubject.forEach((value,key) => {
-            result.push({
-                name:key,
-                value: value.length
-            })
+        const groupBySubject = new Map([...d3.group(all_combinations, d=> d.M_subject).entries()].sort())
+        groupBySubject.forEach((d,key) =>{
+          const no_duplicates = [...new Map(d.map(item => [item.id, item])).values()]
+          result.push({
+            name:key,
+            value: no_duplicates.length
+          })
         })
+        //console.log(groupBySubject)
+        
+        // groupBySubject.forEach((value,key) => {
+        //     result.push({
+        //         name:key,
+        //         value: value.length
+        //     })
+        // })
         return result
     }
 
     const graph_data = SubjectGraph_clac(data)
+    console.log(data)
+    console.log(graph_data)
 
     let DEFAULT_OPTION = {
         tooltip: {
