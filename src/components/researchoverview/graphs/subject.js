@@ -35,10 +35,12 @@ const SubjectGraph = ({data,Subject_callBack}) => {
     }
 
     const graph_data = SubjectGraph_clac(data)
-    console.log(data)
-    console.log(graph_data)
 
     let DEFAULT_OPTION = {
+        title:{
+          left: 'center',
+          text: 'Subjects'
+        },
         tooltip: {
             trigger: 'item'
           },
@@ -53,7 +55,7 @@ const SubjectGraph = ({data,Subject_callBack}) => {
               type: 'pie',
               radius: ['40%', '70%'],
               avoidLabelOverlap: false,
-              selectedMode: 'multiple',
+              selectedMode: (Subject_callBack)?'multiple':'none',
               itemStyle: {
                 borderRadius: 10,
                 borderColor: '#fff',
@@ -99,17 +101,19 @@ const SubjectGraph = ({data,Subject_callBack}) => {
     }
 
     const onChartClick = (d) => {
-      let selectedSub = []
-      if(d.selected.length > 0){
-          const [selectedIndex] = d.selected.map(d => d.dataIndex)
-          selectedSub = selectedIndex.map(d =>graph_data[d].name)
+      if(Subject_callBack){
+        let selectedSub = []
+        if(d.selected.length > 0){
+            const [selectedIndex] = d.selected.map(d => d.dataIndex)
+            selectedSub = selectedIndex.map(d =>graph_data[d].name)
+        }
+        Subject_callBack(selectedSub)
       }
-      Subject_callBack(selectedSub)
   }
 
     return (
         <ReactECharts 
-            style={{height:375}} 
+            style={{height:400}} 
             option={option} 
             lazyUpdate={true}
             onEvents={{

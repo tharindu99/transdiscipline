@@ -33,6 +33,13 @@ const IndexPage = ({data}) => {
     d.cosine = parseFloat(d.cosine)
   })
 
+  // Data pre processed
+  data.allPublicationCsv.nodes.forEach(d => {
+    d.Year = parseInt(d.Year)
+    d.Subject =String(d.Subject).split("#").map(d=> d.trim())
+    d.co_authors =  String(d.Authors).split("#").map(d=> d.trim())
+});
+
 
   const Active_content = () => {
     switch(activeItem) {

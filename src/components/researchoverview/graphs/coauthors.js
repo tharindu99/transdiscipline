@@ -33,10 +33,14 @@ const CoAuthorsGraph = ({data,CoAuthors_callBack}) => {
     }
     const graph_data = CoAuthorsGraph_clac(data)
     const DEFAULT_OPTION = {
+        title:{
+            left: 'center',
+            text: 'Co Authors'
+        },
         tooltip: {
         },
         grid: {
-            left: '3%',
+            left: '3%', 
             right: '4%',
             bottom: '3%',
             containLabel: true
@@ -52,7 +56,10 @@ const CoAuthorsGraph = ({data,CoAuthors_callBack}) => {
             {
                 data: graph_data.xData,
                 type: 'bar',
-                selectedMode: 'multiple'
+                selectedMode:(CoAuthors_callBack)?'multiple':'none',
+                itemStyle:{
+                    color:'#91cc75'
+                }
             }
         ]
     }
@@ -79,19 +86,20 @@ const CoAuthorsGraph = ({data,CoAuthors_callBack}) => {
     }
 
     const onChartClick = (d) => {
-        let selectedCo_author = []
-        if(d.selected.length > 0){
-            const [selectedIndex] = d.selected.map(d => d.dataIndex)
-            selectedCo_author = selectedIndex.map(d =>graph_data.yData[d])
+        if(CoAuthors_callBack){
+            let selectedCo_author = []
+            if(d.selected.length > 0){
+                const [selectedIndex] = d.selected.map(d => d.dataIndex)
+                selectedCo_author = selectedIndex.map(d =>graph_data.yData[d])
+            }
+            
+            const FilteredData = MainData_CoAuthorsFilter(selectedCo_author)
+            CoAuthors_callBack(selectedCo_author)
         }
-        
-        const FilteredData = MainData_CoAuthorsFilter(selectedCo_author)
-        CoAuthors_callBack(selectedCo_author)
     }
 
     return (
         <>
-            <Header as='h4' >Top Co Authors </Header>
             <ReactECharts 
                 style={{height:800}} 
                 option={option}

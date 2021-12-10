@@ -17,6 +17,10 @@ const YearGraph = ({data,Year_callBack}) => {
     const graph_data = YearGraph_clac(data)
 
     const DEFAULT_OPTION = {
+        title:{
+            left: 'center',
+            text: 'Years'
+        },
         tooltip: {
         },
         xAxis: {
@@ -30,7 +34,7 @@ const YearGraph = ({data,Year_callBack}) => {
             {
                 data: graph_data.yData,
                 type: 'bar',
-                selectedMode: 'multiple'
+                selectedMode: (Year_callBack)?'multiple':'none'
             }
         ]
     }
@@ -58,18 +62,20 @@ const YearGraph = ({data,Year_callBack}) => {
     }
 
     const onChartClick = (d) => {
-        let selectedYr = []
-        if(d.selected.length > 0){
-            const [selectedIndex] = d.selected.map(d => d.dataIndex)
-            selectedYr = selectedIndex.map(d =>graph_data.xData[d])
+        if(Year_callBack){
+            let selectedYr = []
+            if(d.selected.length > 0){
+                const [selectedIndex] = d.selected.map(d => d.dataIndex)
+                selectedYr = selectedIndex.map(d =>graph_data.xData[d])
+            }
+            const FilteredData = MainData_YearFilter(selectedYr)
+            Year_callBack(selectedYr)
         }
-        const FilteredData = MainData_YearFilter(selectedYr)
-        Year_callBack(selectedYr)
     }
 
     return (
         <ReactECharts 
-            style={{height:275}} 
+            style={{height:400}} 
             option={option}
             onEvents={{
                 'selectchanged': onChartClick
